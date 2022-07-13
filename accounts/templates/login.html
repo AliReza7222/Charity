@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Form</title>
+</head>
+<body style="margin: 0;padding: 0;font-family: sans-serif;background: #34495e;">
+  <form style="width: 300px;
+
+  padding: 40px;
+
+  position: absolute;
+
+  top: 50%;
+
+  left: 50%;
+
+  transform: translate(-50%,-50%);
+
+  background: #191919;
+
+  text-align: center;" method="Post">
+    {% csrf_token %}
+    <h1 style="color:white">Login</h1>
+      {% for field in form %}
+          <p style="color: white"> {{ field.label_tag }} {{ field }}</p>
+          {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+          {% endfor %}
+      {% endfor %}
+      <button type="submit">Login</button>
+
+  </form>
+</body>
+</html>

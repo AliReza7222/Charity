@@ -33,7 +33,7 @@ class Task(models.Model):
         ('D', 'Done')
     ]
     assigned_benefactor = models.ForeignKey(Benefactor, on_delete=models.SET_NULL, null=True)
-    charity = models.ForeignKey(Charity, on_delete=models.CASCADE)
+    charity = models.ForeignKey(Charity, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=60)
     state = models.CharField(max_length=1, choices=STATE_CHOICE, default='P')
     date = models.DateField(auto_now=True)

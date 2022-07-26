@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from accounts.models import User
 
 
@@ -25,6 +26,27 @@ class Charity(models.Model):
         return self.name
 
 
+class TaskManager(models.Manager):
+
+    def related_tasks_to_charity(self, user):
+        query = Task.objects.filter(charity__user=user)
+        if query:
+            return query
+        return None
+
+    def related_tasks_to_benefactor(self, user):
+        query = Task.objects.filter(assigned_benefactor__user=user)
+        if query:
+            return query
+        return None
+
+    def all_related_tasks_to_user(self, user):
+        query = Task.objects.filter(Q(assigned_benefactor__user=user) | Q(charity__user=user) | Q(state='P'))
+        if query:
+            return query
+        return None
+
+
 class Task(models.Model):
     STATE_CHOICE = [
         ('P', 'Pending'),
@@ -38,6 +60,7 @@ class Task(models.Model):
     state = models.CharField(max_length=1, choices=STATE_CHOICE, default='P')
     date = models.DateField(auto_now=True)
     description = models.TextField()
+    objects = TaskManager()
 
     def __str__(self):
         return self.title

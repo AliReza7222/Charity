@@ -61,7 +61,8 @@
             <div class="container mx-auto" style="width: 60%">
                 <div class="container">
                     <p>تعداد کاربران این سایت :  {{ users.count }} نفر  </p>
-                    <p>اگر در سایت ثبت نام نکردید میتوانید از طریق لینک <a href="#" class="underline">ثبت نام</a> ثبت نام کنید .</p>
+                    <p>اگر در سایت ثبت نام نکردید میتوانید از طریق لینک <a href="{% url 'register' %}"
+                                                                           class="underline">ثبت نام</a> ثبت نام کنید .</p>
                     <p>بعد ثبت نام پروفایل خود را تکمیل کنید .</p>
                     <p> اگر ثبت نام کردید در سایت میتوانید با لینک  <a href="#" class="underline">ورود</a>  وارد سایت شوید . </p>
                 </div>

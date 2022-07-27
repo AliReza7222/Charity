@@ -24,4 +24,4 @@ class RegisterUser(CreateView):
             post.password = password_hash
             post.save()
             return HttpResponse("ok")
-        return HttpResponse(form.errors.as_data())
+        return render(request, 'register.html', context={'form': form})

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% load static %}
+    <meta charset="UTF-8">
+    <title>ثبت نام</title>
+	<link href="{% static 'css/register.css' %}" type="text/css" rel="stylesheet">
+</head>
+<body>
+<form method="POST">
+  {% csrf_token %}
+      <div id="login-box">
+            <div class="left">
+              <h1>ثبت نام کاربر</h1>
+              <br>
+
+              {{ form.username.label }} {{ form.username }}
+              {{ form.password.label }} {{ form.password }}
+              {{ form.re_password.label }} {{ form.re_password }}
+              {{ form.email.label }} {{ form.email }}
+
+              <input type="submit" name="signup_submit" value="ثبت نام" />
+            </div>
+
+            <div class="right">
+              {{ form.first_name.label }} {{ form.first_name }}
+              {{ form.last_name.label }} {{ form.last_name }}
+              {{ form.age.label }} {{ form.age }}
+              <div class="box"><br>
+              {{ form.gender.label }} {{ form.gender }}
+              </div>
+            </div>
+      </div>
+</form>
+</body>
+</html>

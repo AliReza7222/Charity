@@ -1,5 +1,9 @@
+import re
+
 from django import forms
+
 from .models import User
+from django.contrib.auth.forms import UserCreationForm
 
 
 class RegisterForm(forms.ModelForm):
@@ -41,15 +45,22 @@ class RegisterForm(forms.ModelForm):
         username = self.cleaned_data.get('username')
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError("این نام کاربری قبلا ثبت شده است .")
+        if len(username) < 4:
+            raise forms.ValidationError("نام کاربری باید بیشتر از 4 حرف باشد .")
+        if not(re.findall('(?=.*[a-z])(?=.*[0-9]).+', username)):
+            raise forms.ValidationError('نام کاربری باید متشکل از حروف و اعداد باشد .')
         return username
 
     def clean_re_password(self):
         data = self.cleaned_data
         password, re_password = data.get('password'), data.get('re_password')
 
-        if password == re_password:
-            return re_password
-        raise forms.ValidationError('رمز عبور با تکرار ان برابر نیست !')
+        if password != re_password:
+            raise forms.ValidationError('رمز عبور با تکرار ان برابر نیست !')
+
+        if len(password) < 7:
+            raise forms.ValidationError('طول رمز باید حداقل 7 کارکتر باشد !')
+        return re_password
 
     def clean_email(self):
         email = self.cleaned_data.get('email')

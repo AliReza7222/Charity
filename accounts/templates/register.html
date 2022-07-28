@@ -12,14 +12,30 @@
 
     {% for field in form %}
         {% if field.errors %}
-            <div class="alert" dir="rtl">
-              <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <div class="alert2" dir="rtl">
+              <span class="closebtn2" onclick="this.parentElement.style.display='none';">&times;</span>
                 {{ field.label }}: {{ field.errors|striptags }}
             </div>
         {% endif %}
     {% endfor %}
 {% endif %}
 <!-- /Error messaging -->
+
+<!-- /success messaging -->
+{% if success %}
+        <div class="alert success" dir="rtl">
+            <input type="checkbox" id="alert2"/>
+            <label class="close" title="close" for="alert2">
+          <i class="icon-remove">x</i>
+        </label>
+            <p class="inner">
+                با نام کاربری {{ success }} در سایت ثبت نام شدید حال میتوانید به <a href="{% url 'home' %}">خانه</a> بروید و وارد سایت شوید .
+            </p>
+        </div>
+
+{% endif %}
+<!-- /success messaging -->
+
 <form method="POST">
   {% csrf_token %}
       <div id="login-box">

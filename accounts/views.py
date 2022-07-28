@@ -23,5 +23,6 @@ class RegisterUser(CreateView):
             post = form.save()
             post.password = password_hash
             post.save()
-            return HttpResponse("ok")
+            context = {'form': self.form_class(), 'success': data.get('username')}
+            return render(request, 'register.html', context=context)
         return render(request, 'register.html', context={'form': form})

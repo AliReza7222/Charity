@@ -1,6 +1,7 @@
 import re
-
 from django import forms
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Checkbox
 
 from .models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -68,4 +69,10 @@ class RegisterForm(forms.ModelForm):
             raise forms.ValidationError('نام کاربری دیگری با این ایمیل قبلا ثبت شده !')
         return email
 
+
+class LoginForm(forms.Form):
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
+    username = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "لطفا نام کاربری خود را وارد کنید"}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": " رمز را وارد کنید"}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"placeholder": "ایمیل"}))
 

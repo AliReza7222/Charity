@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import User
+from .models import User, Token
+
+
+@admin.register(Token)
+class TokenUser(admin.ModelAdmin):
+    readonly_fields = ['token', 'user']
 
 
 @admin.register(User)

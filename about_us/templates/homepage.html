@@ -1,7 +1,7 @@
-{% load static %}
 <!doctype html>
 <html lang="fa">
 <head>
+    {% load static %}
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -63,7 +63,7 @@
                     <p>اگر در سایت ثبت نام نکردید میتوانید از طریق لینک <a href="{% url 'register' %}"
                                                                            class="underline">ثبت نام</a> ثبت نام کنید .</p>
                     <p>بعد ثبت نام پروفایل خود را تکمیل کنید .</p>
-                    <p> اگر ثبت نام کردید در سایت میتوانید با لینک  <a href="#" class="underline">ورود</a>  وارد سایت شوید . </p>
+                    <p> اگر ثبت نام کردید در سایت میتوانید با لینک  <a href="{% url 'login' %}" class="underline">ورود</a>  وارد سایت شوید . </p>
                 </div>
 
             </div>

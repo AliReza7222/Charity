@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>ورود</title>
+    <link href="{% static 'css/login.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<!-- Error messaging -->
+{% if form.errors %}
+
+    {% for field in form %}
+        {% if field.errors %}
+            <div class="alert2" dir="rtl">
+              <span class="closebtn2" onclick="this.parentElement.style.display='none';">&times;</span>
+                {{ field.label }}: {{ field.errors|striptags }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+<!-- /Error messaging -->
+    <div class="login">
+          <div class="login-triangle"></div>
+
+          <h2 class="login-header">فرم ورود کاربر</h2>
+
+          <form class="login-container" method="POST" dir="rtl">
+            {% csrf_token %}
+            <p>{{ form.username }}</p>
+            <p>{{ form.password }}</p>
+            <p>{{ form.email }}</p>
+            <p>{{ form.captcha }}</p>
+            <p><input type="submit" value="ورود"></p>
+          </form>
+    </div>
+</body>
+</html>

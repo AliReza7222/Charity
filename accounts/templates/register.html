@@ -7,6 +7,19 @@
 	<link href="{% static 'css/register.css' %}" type="text/css" rel="stylesheet">
 </head>
 <body>
+<!-- Error messaging -->
+{% if form.errors %}
+
+    {% for field in form %}
+        {% if field.errors %}
+            <div class="alert" dir="rtl">
+              <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                {{ field.label }}: {{ field.errors|striptags }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+<!-- /Error messaging -->
 <form method="POST">
   {% csrf_token %}
       <div id="login-box">

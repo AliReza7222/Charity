@@ -43,7 +43,6 @@ class RegisterForm(forms.ModelForm):
             raise forms.ValidationError("این نام کاربری قبلا ثبت شده است .")
         return username
 
-
     def clean_re_password(self):
         data = self.cleaned_data
         password, re_password = data.get('password'), data.get('re_password')

@@ -11,3 +11,13 @@ class BenefactorForm(forms.ModelForm):
             'experience',
             'free_time_per_week'
         ]
+
+
+class CharityForm(forms.ModelForm):
+
+    class Meta:
+        model = Charity
+        fields = [
+            'reg_number',
+            'name'
+        ]

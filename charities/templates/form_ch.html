@@ -3,21 +3,21 @@
 <head>
     {% load static %}
     <meta charset="UTF-8">
-    <title>نیکوکار</title>
-    <link href="{% static 'css/ben.css' %}" rel="stylesheet" type="text/css">
+    <title>خیریه</title>
+    <link rel="stylesheet" href="{% static 'css/ben.css' %}" type="text/css">
 </head>
 <body>
     <div class="center">
-          <h1>فرم نیکوکار</h1>
+          <h1>فرم خیریه</h1>
           <form method="post">
            {% csrf_token %}
             <div class="inputbox">
-              {{ form.free_time_per_week }}
-              <span>زمان ازاد در هفته</span>
+              {{ form.name }}
+              <span>اسم خیریه</span>
             </div>
             <div class="inputbox">
               {{ form.reg_number }}
-              <span dir="rtl">تجربه شما</span>
+              <span dir="rtl">شماره ثبت خیریه</span>
             </div>
             <div class="inputbox">
               <input type="submit" value="ثبت">

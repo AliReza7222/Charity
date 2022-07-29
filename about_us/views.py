@@ -18,4 +18,8 @@ def about_us(request):
 
 def homepage(request):
     context = context_dict()
+    context['user_site'] = None
+    if request.user.is_authenticated:
+        context['user_site'] = request.user
+
     return render(request, 'homepage.html', context=context)

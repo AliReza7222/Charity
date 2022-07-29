@@ -18,14 +18,16 @@
                         <a class="nav-link"
                            href="http://localhost:8000/tasks">نیکوکاری‌ها</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           href="{% url 'register' %}">ثبت نام</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           href="{% url 'login' %}">ورود</a>
-                    </li>
+                    {% if user_site == None %}
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href="{% url 'register' %}">ثبت نام</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href="{% url 'login' %}">ورود</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="{% url 'select' %}"
                            id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -47,10 +49,12 @@
                     </li>
 
                 </ul>
-<!--                <span class="navbar-text">-->
-<!--              <button type="button" class="btn btn-danger"-->
-<!--                      style="padding: 7px 20px">خروج</button>-->
-<!--            </span>-->
+                {% if user_site %}
+                    <span class="navbar-text">
+                      <button type="button" class="btn btn-danger"
+                              style="padding: 7px 20px">{{ user }}</button>
+                    </span>
+                {% endif %}
             </div>
         </div>
     </nav>

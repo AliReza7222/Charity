@@ -1,11 +1,16 @@
 from django.shortcuts import render
 from django.views.generic import FormView
 from django.http import HttpResponse
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Benefactor, Charity, Task
 from .forms import BenefactorForm, CharityForm
 
 
+@login_required(login_url='/accounts/login/')
 def select_person(request):
     if request.method == 'GET':
         return render(request, 'select_ben_ch.html')
@@ -32,6 +37,7 @@ class CharityCreate(FormView):
     model = Charity
     template_name = 'form_ch.html'
     form_class = CharityForm
+    permission_classes = [IsAuthenticated, ]
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)

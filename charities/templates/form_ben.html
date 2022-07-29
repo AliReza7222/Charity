@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>نیکوکار</title>
+    <link href="{% static 'css/ben.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="center">
+          <h1>فرم نیکوکار</h1>
+          <form method="post">
+           {% csrf_token %}
+            <div class="inputbox">
+              {{ form.free_time_per_week }}
+              <span>زمان ازاد در هفته</span>
+            </div>
+            <div class="select">
+              {{ form.experience }}
+              <span dir="rtl">تجربه شما</span>
+            </div>
+            <div class="inputbox">
+              <input type="submit" value="ثبت">
+            </div>
+          </form>
+    </div>
+</body>
+</html>

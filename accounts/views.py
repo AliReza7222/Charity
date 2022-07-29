@@ -49,8 +49,8 @@ class LoginUser(FormView):
             if user is not None:
                 str_list = [i for i in (ascii_uppercase + ascii_lowercase + digits)]
                 create_token = ''.join(random.choices(str_list, k=36))
-                Token.objects.create(user=user, token=create_token)
+                if not Token.objects.filter(user__username=username).exists():
+                    Token.objects.create(user=user, token=create_token)
                 login(request, user)
                 return HttpResponse('login user')
-            return HttpResponse('username or password error222')
         return render(request, 'login.html', context={'form': form})

@@ -1,5 +1,7 @@
 import re
 from django import forms
+from django.contrib.auth.hashers import check_password
+
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
 
@@ -72,7 +74,30 @@ class RegisterForm(forms.ModelForm):
 
 class LoginForm(forms.Form):
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
-    username = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "لطفا نام کاربری خود را وارد کنید"}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": " رمز را وارد کنید"}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={"placeholder": "ایمیل"}))
+    username = forms.CharField(label='نام کاربری / پسورد',
+                               widget=forms.TextInput(attrs={"placeholder": "لطفا نام کاربری خود را وارد کنید"}))
+    password = forms.CharField(label='نام کاربری / پسورد',
+                               widget=forms.PasswordInput(attrs={"placeholder": " رمز را وارد کنید"}))
+    email = forms.EmailField(label='ایمیل', widget=forms.EmailInput(attrs={"placeholder": "ایمیل"}))
 
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if not User.objects.filter(username=username).exists():
+            raise forms.ValidationError('نام کاربری یا پسورد اشتباه است .')
+        return username
+
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        if User.objects.filter(username=self.cleaned_data.get('username')).exists():
+            user_password = User.objects.get(username=self.cleaned_data.get('username')).password
+            if check_password(password, user_password):
+                return password
+            raise forms.ValidationError('نام کاربری یا پسورد اشتباه است .')
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(username=self.cleaned_data.get('username')).exists():
+            user_email = User.objects.get(username=self.cleaned_data.get('username')).email
+            if email == user_email:
+                return email
+            raise forms.ValidationError('این ایمیل برای این نام کاربری نامعتبر است !')

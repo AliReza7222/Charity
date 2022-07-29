@@ -60,10 +60,14 @@
             <div class="container mx-auto" style="width: 60%">
                 <div class="container">
                     <p>تعداد کاربران این سایت :  {{ users.count }} نفر  </p>
-                    <p>اگر در سایت ثبت نام نکردید میتوانید از طریق لینک <a href="{% url 'register' %}"
-                                                                           class="underline">ثبت نام</a> ثبت نام کنید .</p>
-                    <p>بعد ثبت نام پروفایل خود را تکمیل کنید .</p>
-                    <p> اگر ثبت نام کردید در سایت میتوانید با لینک  <a href="{% url 'login' %}" class="underline">ورود</a>  وارد سایت شوید . </p>
+                    {% if user_site == None %}
+                        <p>اگر در سایت ثبت نام نکردید میتوانید از طریق لینک <a href="{% url 'register' %}"
+                                                                               class="underline">ثبت نام</a> ثبت نام کنید .</p>
+                        <p>بعد ثبت نام پروفایل خود را تکمیل کنید .</p>
+                        <p> اگر ثبت نام کردید در سایت میتوانید با لینک  <a href="{% url 'login' %}" class="underline">ورود</a>  وارد سایت شوید . </p>
+                    {% elif user_site %}
+                        <p>قسمت پروفایل خود را اگر تکمیل نکردید از لینک <a href="{% url 'select' %}" class="underline">پروفایل</a> تکمیل کنید . </p>
+                    {% endif %}
                 </div>
 
             </div>

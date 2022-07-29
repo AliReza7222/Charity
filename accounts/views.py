@@ -52,5 +52,5 @@ class LoginUser(FormView):
                 if not Token.objects.filter(user__username=username).exists():
                     Token.objects.create(user=user, token=create_token)
                 login(request, user)
-                return HttpResponse('login user')
+                return redirect('/home/')
         return render(request, 'login.html', context={'form': form})

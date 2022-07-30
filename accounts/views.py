@@ -4,12 +4,12 @@ import random
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, FormView
 from django.http import HttpResponse
-from .models import User, Token
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import login, logout
 
 
-from .models import User
+from .models import User, Token
 from .forms import RegisterForm, LoginForm
 from .authenticate import UserBackend
 
@@ -47,10 +47,19 @@ class LoginUser(FormView):
             username, password, email = data.get('username'), data.get('password'), data.get('email')
             user = UserBackend.authenticate(request, username=username, password=password, email=email)
             if user is not None:
-                str_list = [i for i in (ascii_uppercase + ascii_lowercase + digits)]
-                create_token = ''.join(random.choices(str_list, k=36))
                 if not Token.objects.filter(user__username=username).exists():
+                    str_list = [i for i in (ascii_uppercase + ascii_lowercase + digits)]
+                    create_token = ''.join(random.choices(str_list, k=36))
                     Token.objects.create(user=user, token=create_token)
                 login(request, user)
                 return redirect('/home/')
         return render(request, 'login.html', context={'form': form})
+
+
+@login_required(login_url='/accounts/login/')
+def logout_user(request):
+    if request.user.is_authenticated:
+        token_user = Token.objects.get(user=request.user)
+        token_user.delete()
+        logout(request)
+        return redirect('/home/')

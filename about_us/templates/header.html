@@ -28,31 +28,39 @@
                                href="{% url 'login' %}">ورود</a>
                         </li>
                     {% endif %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="{% url 'select' %}"
-                           id="navbarDropdown" role="button" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            پروفایل
-                        </a>
-                        <div class="dropdown-menu text-right"
-                             aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item"
-                               href="http://localhost:3000/benefactor">نیکوکار</a>
-                            <a class="dropdown-item"
-                               href="http://localhost:3000/charity">موسسه خیریه</a>
-                        </div>
-                    </li>
+                    {% if user_site %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="{% url 'select' %}"
+                               id="navbarDropdown" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                پروفایل
+                            </a>
+                            <div class="dropdown-menu text-right"
+                                 aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item"
+                                   href="http://localhost:3000/benefactor">نیکوکار</a>
+                                <a class="dropdown-item"
+                                   href="http://localhost:3000/charity">موسسه خیریه</a>
+                            </div>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="http://localhost:8000/about">
                             درباره‌ما
                         </a>
                     </li>
+                    {% if user_site %}
+                        <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{% url 'logout' %}" style="color:#FF534D">خروج کاربر</a>
+                        </li>
+                    {% endif %}
 
                 </ul>
                 {% if user_site %}
                     <span class="navbar-text">
                       <button type="button" class="btn btn-danger"
-                              style="padding: 7px 20px">{{ user }}</button>
+                              style="padding: 7px 20px">{{ user_site }}</button>
                     </span>
                 {% endif %}
             </div>

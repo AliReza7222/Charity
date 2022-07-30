@@ -6,7 +6,6 @@ from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
 
 from .models import User
-from django.contrib.auth.forms import UserCreationForm
 
 
 class RegisterForm(forms.ModelForm):

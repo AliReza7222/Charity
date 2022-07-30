@@ -26,6 +26,21 @@ class Charity(models.Model):
         return self.name
 
 
+class ProfileUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='image-profile/')
+    address = models.CharField(max_length=300)
+    description = models.TextField()
+    phone = models.CharField(max_length=16)
+
+    def delete(self, using=None, keep_parents=False):
+        self.image.storage.delete(str(self.image.name))
+        super().delete()
+
+    def __str__(self):
+        return self.user.username
+
+
 class TaskManager(models.Manager):
 
     def related_tasks_to_charity(self, user):

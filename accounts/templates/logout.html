@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>خروج</title>
+    <link href="{% static 'css/login.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="login">
+              <div class="login-triangle"></div>
+
+              <h2 class="login-header">از خروج از سایت مطمن هستید ؟</h2>
+              <form method="POST">
+                    {% csrf_token %}
+                    <p><input type="submit" value="خروج"></p>
+              </form>
+    </div>
+</body>
+</html>

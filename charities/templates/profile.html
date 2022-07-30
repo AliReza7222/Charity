@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>پروفایل</title>
+    <link href="{% static 'css/profile.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+        <form method="post" enctype="multipart/form-data" >
+          {% csrf_token %}
+          <h1 class="a11y-hidden">پروفایل</h1>
+          <div dir="rtl">
+            <label class="label-email">
+              {{ form.image }}
+              <span class="required">{{ form.image.label }}</span>
+            </label>
+          </div>
+          <div dir="rtl">
+            <label class="label-email">
+              {{ form.phone }}
+              <span class="required">{{ form.phone.label }}</span>
+            </label>
+          </div>
+          <div dir="rtl">
+            <label class="label-email">
+              {{ form.address }}
+              <span class="required">{{ form.address.label }}</span>
+            </label>
+          </div>
+          <div dir="rtl">
+            <label class="label-email">
+              {{ form.description }}
+              <span class="required">{{ form.description.label }}</span>
+            </label>
+          </div>
+          <br><br>
+
+          <input type="submit" value="ثبت" />
+          <figure aria-hidden="true">
+            <div class="person-body"></div>
+            <div class="neck skin"></div>
+            <div class="head skin">
+              <div class="eyes"></div>
+              <div class="mouth"></div>
+            </div>
+            <div class="hair"></div>
+            <div class="ears"></div>
+            <div class="shirt-1"></div>
+            <div class="shirt-2"></div>
+          </figure>
+        </form>
+</body>
+</html>

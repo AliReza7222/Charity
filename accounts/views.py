@@ -58,8 +58,11 @@ class LoginUser(FormView):
 
 @login_required(login_url='/accounts/login/')
 def logout_user(request):
-    if request.user.is_authenticated:
-        token_user = Token.objects.get(user=request.user)
-        token_user.delete()
-        logout(request)
-        return redirect('/home/')
+    if request.method == "GET":
+        return render(request, 'logout.html', context={'user': request.user})
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            token_user = Token.objects.get(user=request.user)
+            token_user.delete()
+            logout(request)
+            return redirect('/home/')

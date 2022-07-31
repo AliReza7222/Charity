@@ -13,6 +13,15 @@ from .permissions import IsLoginUser
 @login_required(login_url='/accounts/login/')
 def select_person(request):
     if request.method == 'GET':
+        if ProfileUser.objects.filter(user=request.user).exists():
+            user = request.user
+            context = dict()
+            if Benefactor.objects.filter(user=user).exists():
+                context['benefactor'] = Benefactor.objects.get(user=user)
+            elif Charity.objects.filter(user=user).exists():
+                context['charity'] = Charity.objects.get(user=user)
+            context['profile'] = ProfileUser.objects.get(user=user)
+            return render(request, 'show_profile.html', context=context)
         return render(request, 'select_ben_ch.html')
 
 
@@ -30,7 +39,8 @@ class BenefactorCreate(FormView):
                 return HttpResponse('you create a object later ....')
             Benefactor.objects.create(user=user, experience=exp, free_time_per_week=free_time)
             return redirect('/charities/profile/')
-        return HttpResponse(form.errors)
+        messages.success(request, 'شما نوع کاربری خود را قبلا انتخاب کردید .')
+        return redirect('/home/')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -47,7 +57,8 @@ class CharityCreate(FormView):
                 return HttpResponse('you create a object later ....')
             Charity.objects.create(user=user, name=name, reg_number=reg_number)
             return redirect('/charities/profile/')
-        return HttpResponse(form.errors)
+        messages.success(request, 'شما نوع کاربری خود را قبلا انتخاب کردید .')
+        return redirect('/home/')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -62,8 +73,16 @@ class CreateProfile(FormView):
             data = form.cleaned_data
             user, img = request.user, request.FILES.get('image')
             phone, address, description = data.get('phone'), data.get('address'), data.get('description')
-            ProfileUser.objects.create(user=user, phone=phone, address=address, description=description, image=img)
-            messages.success(request, 'پروفایل کاربری شما کامل شد از بخش پروفایل میتوانید انرا ببینید .')
-            return redirect('/home/')
-        print(form.errors)
-        return HttpResponse('error')
+            # create profile
+            if not ProfileUser.objects.filter(user=user).exists():
+                ProfileUser.objects.create(user=user, phone=phone, address=address, description=description, image=img)
+                messages.success(request, 'پروفایل کاربری شما کامل شد از بخش پروفایل میتوانید انرا ببینید .')
+                return redirect('/home/')
+            # update profile
+            else:
+                profile = ProfileUser.objects.get(user=user)
+                profile.delete()
+                ProfileUser.objects.create(user=user, phone=phone, address=address, description=description, image=img)
+                return redirect('/charities/select/')
+
+        return HttpResponse('Error...')

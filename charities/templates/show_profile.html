@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>پروفایل</title>
+    <link href="{% static 'css/show_profile.css' %}" rel="stylesheet" type="text/css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container emp-profile">
+            <form method="get">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <img src="{{ profile.image.url }}" alt=""/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                        {{ user.first_name }} {{ user.last_name }}
+                                    </h5>
+
+                                    <p class="proile-rating"><span>{{ user.username }}</span>: نام کاربری</p>
+                            <br>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">اطلاعات</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{% url 'profile' %}">
+                            تغییر پروفایل
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>نام کاربری</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ user.username }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>نوع کاربری </label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>
+                                                    {% if benefactor %}
+                                                         نیکوکار
+                                                    {% elif charity %}
+                                                         موسسه خیریه
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        {% if benefactor %}
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>تجربه</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>{{ benefactor.experience}}</p>
+                                                </div>
+                                            </div>
+                                             <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>زمان ازاد در هفته</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>{{ benefactor.free_time_per_week}}</p>
+                                                </div>
+                                            </div>
+                                        {% elif charity %}
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>اسم خیریه</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>{{ charity.name}}</p>
+                                                </div>
+                                            </div>
+                                             <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>شماره ثبت خیریه</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>{{ charity.reg_number}}</p>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>نام و نام خانوادگی</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ user.first_name}} {{ user.last_name }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>ایمیل</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ user.email }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>سن/جنسیت</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ user.age }} / {{ user.gender }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>ادرس</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ profile.address }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>شماره تلفن</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ profile.phone }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>توضیحات </label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ profile.description }}</p>
+                                            </div>
+                                        </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Experience</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Expert</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Hourly Rate</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>10$/hr</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Total Projects</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>230</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>English Level</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Expert</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Availability</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>6 months</p>
+                                            </div>
+                                        </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Your Bio</label><br/>
+                                        <p>Your detail description</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div></body>
+</html>

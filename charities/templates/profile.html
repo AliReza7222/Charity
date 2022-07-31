@@ -7,6 +7,19 @@
     <link href="{% static 'css/profile.css' %}" rel="stylesheet" type="text/css">
 </head>
 <body>
+<!--Error message-->
+  {% if form.errors %}
+
+      {% for field in form %}
+          {% if field.errors %}
+              <div class="alert2" dir="rtl">
+                <span class="closebtn2" onclick="this.parentElement.style.display='none';">&times;</span>
+                  {{ field.label }}: {{ field.errors|striptags }}
+              </div>
+          {% endif %}
+      {% endfor %}
+  {% endif %}
+<!--Error message-->
         <form method="post" enctype="multipart/form-data" >
           {% csrf_token %}
           <h1 class="a11y-hidden">پروفایل</h1>

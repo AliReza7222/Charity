@@ -67,7 +67,6 @@ class CreateProfile(FormView):
     form_class = ProfileForm
 
     def post(self, request, *args, **kwargs):
-        print(request.FILES)
         form = self.form_class(request.POST, request.FILES)
         if form.is_valid():
             data = form.cleaned_data
@@ -85,4 +84,4 @@ class CreateProfile(FormView):
                 ProfileUser.objects.create(user=user, phone=phone, address=address, description=description, image=img)
                 return redirect('/charities/select/')
 
-        return HttpResponse('Error...')
+        return render(request, 'profile.html', context={'form': form})

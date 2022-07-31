@@ -350,3 +350,22 @@ figure .shirt-2 {
   left: 52.5%;
   transform: skew(10deg) rotate(-15deg)
 }
+/* message box */
+.alert2 {
+  padding: 10px;
+  background-color: #f44336; /* Red */
+  color: white;
+  margin-bottom: 15px;
+}
+
+/* The close button */
+.closebtn2 {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: left;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}

@@ -25,11 +25,12 @@
                                     </h5>
 
                                     <p class="proile-rating"><span>{{ user.username }}</span>: نام کاربری</p>
-                            <br>
+
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">اطلاعات</a>
                                 </li>
+
                             </ul>
                         </div>
                     </div>
@@ -38,6 +39,7 @@
                             تغییر پروفایل
                         </a>
                     </div>
+
                 </div>
                 <div class="row">
                     <div class="col-md-4"></div>
@@ -72,7 +74,7 @@
                                                     <label>تجربه</label>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <p>{{ benefactor.experience}}</p>
+                                                    <p>{{ benefactor.get_experience_display }}</p>
                                                 </div>
                                             </div>
                                              <div class="row">
@@ -122,7 +124,7 @@
                                                 <label>سن/جنسیت</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>{{ user.age }} / {{ user.gender }}</p>
+                                                <p>{{ user.age }} / {{ user.get_gender_display }}</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -149,6 +151,14 @@
                                                 <p>{{ profile.description }}</p>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <a href="{% url 'home' %}">
+                                                    بازگشت به خانه
+                                                </a>
+                                            </div>
+                                        </div>
+
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                         <div class="row">

@@ -3,6 +3,7 @@ from django.views.generic import FormView, CreateView
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from .models import Benefactor, Charity, Task, ProfileUser
 from .forms import BenefactorForm, CharityForm, ProfileForm
@@ -62,6 +63,7 @@ class CreateProfile(FormView):
             user, img = request.user, request.FILES.get('image')
             phone, address, description = data.get('phone'), data.get('address'), data.get('description')
             ProfileUser.objects.create(user=user, phone=phone, address=address, description=description, image=img)
+            messages.success(request, 'پروفایل کاربری شما کامل شد از بخش پروفایل میتوانید انرا ببینید .')
             return redirect('/home/')
         print(form.errors)
         return HttpResponse('error')

@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import login, logout
+from django .contrib import messages
 
 
 from .models import User, Token
@@ -52,6 +53,7 @@ class LoginUser(FormView):
                     create_token = ''.join(random.choices(str_list, k=36))
                     Token.objects.create(user=user, token=create_token)
                 login(request, user)
+                messages.success(request, f'{username} وارد سایت شدید .')
                 return redirect('/home/')
         return render(request, 'login.html', context={'form': form})
 
@@ -65,4 +67,5 @@ def logout_user(request):
             token_user = Token.objects.get(user=request.user)
             token_user.delete()
             logout(request)
+            messages.success(request, 'شما با موفقیت از سایت خارج شدید .')
             return redirect('/home/')

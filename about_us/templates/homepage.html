@@ -14,6 +14,7 @@
           crossorigin="anonymous">
     <link href='https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css' rel='stylesheet'
           type='text/css'>
+    <link rel="stylesheet" href="{% static 'css/message.css' %}" type="text/css">
 
 
     <title>خانه</title>
@@ -46,6 +47,22 @@
 <div>
     {% include "./header.html" %}
     <section>
+        <!-- /success messaging -->
+        {% if messages %}
+                <div class="alert success" dir="rtl">
+                    <input type="checkbox" id="alert2"/>
+                    <label class="close" title="close" for="alert2">
+                  <i class="icon-remove">x</i>
+                </label>
+                    <p class="inner">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </p>
+                </div>
+
+        {% endif %}
+        <!-- /success messaging -->
         <div class="p-5 text-center">
             <h3>به سایت ما خوش آمدید</h3>
         </div>

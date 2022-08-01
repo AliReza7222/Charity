@@ -14,6 +14,14 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     gender = models.CharField(max_length=1, choices=CHOICE_GENDER, null=True, blank=True)
 
+    @property
+    def is_benefactor(self):
+        return hasattr(self, 'benefactor')
+
+    @property
+    def is_charity(self):
+        return hasattr(self, 'charity')
+
 
 class Token(models.Model):
     token = models.CharField(max_length=36)

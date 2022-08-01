@@ -5,8 +5,42 @@
     <meta charset="UTF-8">
     <title>خیریه</title>
     <link rel="stylesheet" href="{% static 'css/ben.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/message.css' %}" type="text/css">
 </head>
 <body>
+    <style>
+                .alert2 {
+          padding: 10px;
+          background-color: #f44336; /* Red */
+          color: white;
+          margin-bottom: 15px;
+        }
+
+        /* The close button */
+        .closebtn2 {
+          margin-left: 15px;
+          color: white;
+          font-weight: bold;
+          float: left;
+          font-size: 22px;
+          line-height: 20px;
+          cursor: pointer;
+          transition: 0.3s;
+        }
+    </style>
+    <!--Error message-->
+      {% if form.errors %}
+
+          {% for field in form %}
+              {% if field.errors %}
+                  <div class="alert2" dir="rtl">
+                    <span class="closebtn2" onclick="this.parentElement.style.display='none';">&times;</span>
+                      {{ field.label }}: {{ field.errors|striptags }}
+                  </div>
+              {% endif %}
+          {% endfor %}
+      {% endif %}
+    <!-- /Error messaging -->
     <div class="center">
           <h1>فرم خیریه</h1>
           <form method="post">

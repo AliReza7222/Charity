@@ -1,20 +1,21 @@
 from django.shortcuts import render, redirect
-from django.views.generic import FormView, CreateView
+from django.views.generic import FormView
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+
 from .models import Benefactor, Charity, Task, ProfileUser
 from .forms import BenefactorForm, CharityForm, ProfileForm
-from .permissions import IsLoginUser
+from .permissions import check_charity_user
 
 
 @login_required(login_url='/accounts/login/')
 def select_person(request):
     if request.method == 'GET':
+        user = request.user
         if ProfileUser.objects.filter(user=request.user).exists():
-            user = request.user
             context = dict()
             if Benefactor.objects.filter(user=user).exists():
                 context['benefactor'] = Benefactor.objects.get(user=user)
@@ -22,6 +23,8 @@ def select_person(request):
                 context['charity'] = Charity.objects.get(user=user)
             context['profile'] = ProfileUser.objects.get(user=user)
             return render(request, 'show_profile.html', context=context)
+        if Benefactor.objects.filter(user=user).exists() or Charity.objects.filter(user=user).exists():
+            return redirect('/charities/profile/')
         return render(request, 'select_ben_ch.html')
 
 
@@ -57,6 +60,8 @@ class CharityCreate(FormView):
                 return HttpResponse('you create a object later ....')
             Charity.objects.create(user=user, name=name, reg_number=reg_number)
             return redirect('/charities/profile/')
+        if form.errors:
+            return render(request, 'form_ch.html', context={'form': form})
         messages.success(request, 'شما نوع کاربری خود را قبلا انتخاب کردید .')
         return redirect('/home/')
 
@@ -85,3 +90,10 @@ class CreateProfile(FormView):
                 return redirect('/charities/select/')
 
         return render(request, 'profile.html', context={'form': form})
+
+
+@method_decorator([login_required, check_charity_user], name='dispatch')
+class CreateTask(FormView):
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('Hello')

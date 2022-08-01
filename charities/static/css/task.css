@@ -1,0 +1,69 @@
+/*********** General CSS ***********/
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #2e3c49;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 322;
+  color: darkgray;
+}
+
+/*********** Form CSS ***********/
+#centered {
+  max-width: 300px;
+  margin: 50px auto 0;
+}
+
+h2 {
+  font-family: 'Qwigley', cursive;
+  font-size: 7em;
+  color: #f3f4f6;
+  text-shadow: 1px 3px black;
+}
+
+input, textarea, select {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  width: 100%;
+  margin: 8px 0;
+  text-indent: 1em;
+  padding: 10px 0;
+  border-radius: 3px;
+  border: 1px solid lightgray;
+}
+
+input[type="submit"] {
+  background-color: #4d90fe;
+  color: white;
+  border: 1px solid #3079ed;
+}
+
+input[type="submit"]:hover {
+  background-color: #4d9aff;
+  color: white;
+}
+
+p {
+  margin-top: 10px;
+  font-size: 0.75em;
+}
+
+footer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+a {
+  color:inherit;
+}
+
+a:hover {
+  color: #4d9aff;
+}
+
+i {
+  margin: 5px;
+}

@@ -105,6 +105,7 @@ class CreateTask(FormView):
             user_charity = Charity.objects.get(user=user)
             state, title, description = data.get('state'), data.get('title'), data.get('description')
             Task.objects.create(charity=user_charity, state=state, title=title, description=description)
-            return HttpResponse('create a Task')
-        return HttpResponse(form.errors.as_data())
+            messages.success(request, 'تسک شما با موفقیت ثبت شد .')
+            return redirect('/charities/task/')
+        return render(request, 'tasks.html', context={'form': form})
 

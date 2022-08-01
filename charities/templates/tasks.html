@@ -1,14 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  {% load static %}
+  <meta charset="utf-8">
+  <title>ثبت نیکوکاری</title>
+  <link rel="stylesheet" href="main.css">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Qwigley' rel='stylesheet' type='text/css'>
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <link href="{% static 'css/task.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/message.css' %}" rel="stylesheet" type="text/css">
 </head>
 <body>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">submit</button>
-</form>
+  <!-- /success messaging -->
+        {% if messages %}
+                <div class="alert success" dir="rtl">
+                    <input type="checkbox" id="alert2"/>
+                    <label class="close" title="close" for="alert2">
+                  <i class="icon-remove">x</i>
+                </label>
+                    <p class="inner">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </p>
+                </div>
+
+        {% endif %}
+  <!-- /success messaging -->
+  <!--  error message -->
+  {% if form.errors %}
+    {%  for field in form %}
+        {% if field.errors %}
+              <style>
+                    /* The alert message box */
+                    .alert {
+                      padding: 20px;
+                      background-color: #f44336; /* Red */
+                      color: white;
+                      margin-bottom: 15px;
+                    }
+
+                    /* The close button */
+                    .closebtn {
+                      margin-left: 15px;
+                      color: white;
+                      font-weight: bold;
+                      float: right;
+                      font-size: 22px;
+                      line-height: 20px;
+                      cursor: pointer;
+                      transition: 0.3s;
+                    }
+
+                    /* When moving the mouse over the close button */
+                    .closebtn:hover {
+                      color: black;
+                    }
+              </style>
+              <div class="alert" dir="rtl">
+                  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                  {{ field.label }} : {{ field.errors }}
+              </div>
+        {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  <!-- / error message -->
+  <div id="centered" dir="rtl">
+    <form method="POST" name="form_for_treehouse_contest">
+      {% csrf_token %}
+      <h1>فرم ایجاد نیکوکاری</h1>
+      {{ form.title }}<br>
+      {{ form.state }}<br>
+      {{ form.description }}
+      {{ form.captcha }}
+      <input type="submit" value="ثبت" id="send"><br>
+    </form>
+   </div>
+
+
+
 </body>
+
 </html>

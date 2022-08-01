@@ -41,3 +41,19 @@ class ProfileForm(forms.Form):
         elif len(phone) == 14 and re.findall('^0{2}989[0-9]+', phone):
             return phone
         raise forms.ValidationError('شماره تلفن همراه را بصورت صحیح وارد کنید !')
+
+
+class TaskForm(forms.ModelForm):
+
+    class Meta:
+        model = Task
+        fields = [
+            'title',
+            'state',
+            'description'
+        ]
+        labels = {
+            'title': 'عنوان',
+            'state': 'جالت',
+            'description': 'توضیح',
+        }

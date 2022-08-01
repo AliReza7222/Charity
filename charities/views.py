@@ -7,7 +7,7 @@ from django.contrib import messages
 
 
 from .models import Benefactor, Charity, Task, ProfileUser
-from .forms import BenefactorForm, CharityForm, ProfileForm
+from .forms import BenefactorForm, CharityForm, ProfileForm, TaskForm
 from .permissions import check_charity_user
 
 
@@ -94,6 +94,17 @@ class CreateProfile(FormView):
 
 @method_decorator([login_required, check_charity_user], name='dispatch')
 class CreateTask(FormView):
+    template_name = 'tasks.html'
+    form_class = TaskForm
 
-    def get(self, request, *args, **kwargs):
-        return HttpResponse('Hello')
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = request.user
+            user_charity = Charity.objects.get(user=user)
+            state, title, description = data.get('state'), data.get('title'), data.get('description')
+            Task.objects.create(charity=user_charity, state=state, title=title, description=description)
+            return HttpResponse('create a Task')
+        return HttpResponse(form.errors.as_data())
+

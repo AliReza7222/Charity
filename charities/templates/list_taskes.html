@@ -6,8 +6,45 @@
     <title>لیست نیکوکاری ها</title>
     <link href="{% static 'css/tags.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css/list_taskes.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/message.css' %}" rel="stylesheet" type="text/css">
 </head>
 <body>
+  <style>
+                    /* The alert message box */
+                    .alert {
+                      padding: 20px;
+                      background-color: #f44336; /* Red */
+                      color: white;
+                      margin-bottom: 15px;
+                    }
+
+                    /* The close button */
+                    .closebtn {
+                      margin-left: 15px;
+                      color: white;
+                      font-weight: bold;
+                      float: right;
+                      font-size: 22px;
+                      line-height: 20px;
+                      cursor: pointer;
+                      transition: 0.3s;
+                    }
+
+                    /* When moving the mouse over the close button */
+                    .closebtn:hover {
+                      color: black;
+                    }
+              </style>
+<!-- /Error messaging -->
+        {% if messages %}
+            {% for message in messages %}
+               <div class="alert" dir="rtl">
+                  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                  {{ message }}
+              </div>
+            {% endfor %}
+        {% endif %}
+<!-- /Error messaging -->
 <h1>لیست نیکوکاری ها</h1>
 <h4> . برای درخواست هر نیکوکاری با توجه به مشخصات و خیریه مربوطه بر روی عنوان ان کلیک کنید </h4>
 <table class="table">
@@ -22,12 +59,14 @@
       <tr class="table__row">
             <td class="table__content" data-heading="Player">{{ charity.name }}</td>
             <td class="table__content" data-heading="Seasons">
-                <a href="#" class="underline">{{ task.title }}</a></td>
+                <a href="{% url 'task_request' task.id %}" class="underline">{{ task.title }}</a></td>
             <td class="table__content" data-heading="Points">{{ task.get_state_display }}</td>
             <td class="table__content" data-heading="Jersey Number">{{ task.date }}</td>
         {% endfor %}
       </tr>
   {% endfor %}
 </table>
+<a href="{% url 'home' %}"  class="underline"><h4 style="text-align:center">بازگشت به خانه</h4></a>
+
 </body>
 </html>

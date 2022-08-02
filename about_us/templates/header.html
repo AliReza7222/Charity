@@ -23,13 +23,13 @@
                     {% if user_site.is_benefactor %}
                         <li class="nav-item">
                             <a class="nav-link"
-                               href="#">درخواست نیکوکاری</a>
+                               href="{% url 'list_taskes' %}">درخواست نیکوکاری</a>
                         </li>
                     {% endif %}
                     {% if not user_site.is_benefactor and not user_site.is_charity %}
                         <li class="nav-item">
                                 <a class="nav-link"
-                                   href="#">نیکوکاری ها</a>
+                                   href="{% url 'list_taskes' %}">نیکوکاری ها</a>
                         </li>
                     {% endif %}
                     {% if user_site == None %}

@@ -8,7 +8,7 @@ from django.contrib import messages
 
 from .models import Benefactor, Charity, Task, ProfileUser
 from .forms import BenefactorForm, CharityForm, ProfileForm, TaskForm
-from .permissions import check_charity_user
+from .permissions import check_charity_user, check_benefactor
 
 
 @login_required(login_url='/accounts/login/')
@@ -117,3 +117,19 @@ def show_tasks(request):
         context = {'charities': charities}
         return render(request, 'list_taskes.html', context=context)
 
+
+@check_benefactor
+@login_required(login_url='/accounts/login/')
+def task_request(request, task_id):
+    task = Task.objects.get(id=task_id)
+    if request.method == 'GET':
+        if task.state != 'P':
+            messages.error(request, 'شما نمیتوانید این نیکوکاری را قبول کنید چون در وضعیت Pending نیست .')
+            return redirect('/charities/show_taskes/')
+        context = {'task': task}
+        return render(request, 'request_task.html', context=context)
+    if request.method == 'POST':
+        benefactor = Benefactor.objects.get(user=request.user)
+        task.assign_to_benefactor(benefactor)
+        messages.success(request, 'درخواست نیکوکاری شما ثبت شد منتظر جواب بمانید .')
+        return redirect('/home/')

@@ -109,3 +109,11 @@ class CreateTask(FormView):
             return redirect('/charities/task/')
         return render(request, 'tasks.html', context={'form': form})
 
+
+def show_tasks(request):
+    charities = Charity.objects.all()
+
+    if request.method == "GET":
+        context = {'charities': charities}
+        return render(request, 'list_taskes.html', context=context)
+

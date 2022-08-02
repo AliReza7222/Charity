@@ -148,5 +148,5 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'accounts.User'
 
 # recaptcha you enter your Public-key and privet-key recaptcha google
-RECAPTCHA_PUBLIC_KEY = "6LfKSiohAAAAAOxKMEWd0beXyGnl0fPItyr-mMq7"
-RECAPTCHA_PRIVATE_KEY = "6LfKSiohAAAAAOPo0F9uFjCAZ1YLQUU5vTEZFz0y"
+RECAPTCHA_PUBLIC_KEY = ""
+RECAPTCHA_PRIVATE_KEY = ""

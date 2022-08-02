@@ -25,6 +25,7 @@ def check_benefactor(func):
             return func(request, *args, **kwargs)
         elif request.user.is_charity:
             message = 'متاسفانه شما نمیتوانید وارد این صفحه شوید چون بعنوان موسسه خیریه در این سایت ثبت شدید .'
-            raise validators.ValidationError(message)
+            messages.error(request, message=message)
+            return redirect('/charities/show_taskes/')
 
     return check

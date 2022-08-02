@@ -26,7 +26,7 @@
                                href="{% url 'list_taskes' %}">درخواست نیکوکاری</a>
                         </li>
                     {% endif %}
-                    {% if not user_site.is_benefactor and not user_site.is_charity %}
+                    {% if user_site.is_anonymous or user_site.is_charity %}
                         <li class="nav-item">
                                 <a class="nav-link"
                                    href="{% url 'list_taskes' %}">نیکوکاری ها</a>

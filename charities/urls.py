@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (select_person, BenefactorCreate,
                     CharityCreate, CreateProfile, CreateTask, show_tasks, task_request, task_related_charity_benefactor,
-                    )
+                    task_update_or_delete)
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -15,6 +15,8 @@ urlpatterns = [
     path('show_taskes/', show_tasks, name='list_taskes'),
     path('request/<slug:task_id>/', task_request, name='task_request'),
     path('task_ch_be/', task_related_charity_benefactor, name='task_ch_be'),
+    path('update_delete/<str:command>/<slug:task_id>/',
+         task_update_or_delete, name='update_delete')
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

@@ -9,25 +9,45 @@
     <link href="{% static 'css/message.css' %}" rel="stylesheet" type="text/css">
 </head>
 <body>
+<!-- /success messaging -->
+        {% if messages %}
+                <div class="alert success" dir="rtl">
+                    <input type="checkbox" id="alert2"/>
+                    <label class="close" title="close" for="alert2">
+                  <i class="icon-remove" dir="rtl">x</i>
+                </label>
+                    <p class="inner">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </p>
+                </div>
+
+        {% endif %}
+  <!-- /success messaging -->
 {% if tasks_ch %}
         <h1>لیست نیکوکاری ها ثبت شده توسط خیریه ما </h1>
-        <h4> . برای درخواست هر نیکوکاری با توجه به مشخصات و خیریه مربوطه بر روی عنوان ان کلیک کنید </h4>
+        <h4>. در زیر لیست نیکوکاری های که توسط شما ایجاد شده نمایش داده شده است </h4>
         <table class="table">
           <tr>
-            <th class="table__heading">اسم خیریه ها</th>
             <th class="table__heading">عنوان</th>
             <th class="table__heading">وضعیت</th>
             <th class="table__heading">زمان ثبت</th>
+            <th class="table__heading">تغییر</th>
+            <th class="table__heading">حذف</th>
           </tr>
-          {% for charity in charities %}
-            {% for task in charity.task_set.all %}
+          {% for task in tasks_ch %}
               <tr class="table__row">
-                    <td class="table__content" data-heading="Player">{{ charity.name }}</td>
-                    <td class="table__content" data-heading="Seasons">
-                        <a href="{% url 'task_request' task.id %}" class="underline">{{ task.title }}</a></td>
+                    <td class="table__content" data-heading="Player">{{ task.title }}</td>
                     <td class="table__content" data-heading="Points">{{ task.get_state_display }}</td>
                     <td class="table__content" data-heading="Jersey Number">{{ task.date }}</td>
-                {% endfor %}
+                    <td class="table__content" data-heading="Jersey Number">
+                        <a href="{% url 'update_delete' 'change' task.id %}" class="underline">کلیک کنید</a>
+                    </td>
+                    <td class="table__content" data-heading="Jersey Number">
+                        <a href="{% url 'update_delete' 'delete' task.id %}"
+                           class="underline" style="color:red">حذف</a>
+                    </td>
               </tr>
           {% endfor %}
         </table>

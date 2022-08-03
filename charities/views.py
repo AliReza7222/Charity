@@ -101,6 +101,7 @@ class CreateTask(FormView):
         form = self.form_class(request.POST)
         if form.is_valid():
             data = form.cleaned_data
+            print(data)
             user = request.user
             user_charity = Charity.objects.get(user=user)
             state, title, description = data.get('state'), data.get('title'), data.get('description')
@@ -137,6 +138,7 @@ def task_request(request, task_id):
         return redirect('/home/')
 
 
+@login_required(login_url='/accounts/login/')
 def task_related_charity_benefactor(request):
 
     if request.method == 'GET':
@@ -145,3 +147,29 @@ def task_related_charity_benefactor(request):
         tasks_benefactor = Task.objects.related_tasks_to_benefactor(user)
         context = {'tasks_ch': tasks_charity, 'tasks_be': tasks_benefactor}
         return render(request, 'task_related_charity.html', context=context)
+
+
+@check_charity_user
+@login_required(login_url='/accounts/login/')
+def task_update_or_delete(request, command, task_id):
+    task = Task.objects.get(id=task_id)
+    if request.method == 'GET':
+        if command == 'delete':
+            message = f' نیکوکاری مورد نظر با عنوان{task.title} با موفقیت حذف شد .'
+            messages.success(request, message)
+            task.delete()
+            return redirect('/charities/task_ch_be/')
+        elif command == 'change':
+            data_task = {'title': task.title, 'date': task.date, 'state': task.state, 'description': task.description}
+            form = TaskForm(data_task)
+            return render(request, 'tasks.html', context={'form': form})
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            form = form.cleaned_data
+            task.title, task.state, task.description = form.get('title'), form.get('state'), form.get('description')
+            task.date = form.get('date')
+            task.save()
+            messages.success(request, f'نیکوکاری مورد نظر با موفقیت تغییر یافت .')
+            return redirect('/charities/task_ch_be/')
+        return render(request, 'tasks.html', context={'form': form})

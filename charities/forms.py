@@ -4,8 +4,6 @@ from django import forms
 
 from .models import Benefactor, Charity, Task, ProfileUser
 
-from captcha.fields import ReCaptchaField
-from captcha.widgets import ReCaptchaV2Checkbox
 
 class BenefactorForm(forms.ModelForm):
 
@@ -46,9 +44,6 @@ class ProfileForm(forms.Form):
 
 
 class TaskForm(forms.ModelForm):
-    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox, error_messages={
-        'required': 'تیک من ربات نیستم را وارد نکردید !',
-    })
 
     class Meta:
         model = Task

@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-img">
-                            <img src="{{ profile.image.url }}" alt=""/>
+                            <img src="{{ profile.image.url }}"  alt=""/>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -30,7 +30,19 @@
                                 <li class="nav-item">
                                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">اطلاعات</a>
                                 </li>
-
+                                {% if benefactor %}
+                                    <li class="nav-item">
+                                        <a class="nav-link"  data-toggle="tab" style="color:#575756"
+                                           href="{% url 'task_ch_be' %}" role="tab" aria-controls="profile" aria-selected="false">
+                                            لیست درخواست های ثبت شده</a>
+                                    </li>
+                                {% elif charity %}
+                                    <li class="nav-item">
+                                        <a class="nav-link"  data-toggle="tab" style="color:#575756"
+                                           href="{% url 'task_ch_be' %}" role="tab" aria-controls="profile" aria-selected="false">
+                                            لیست تسک های ثبت شده</a>
+                                    </li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
@@ -39,6 +51,7 @@
                             تغییر پروفایل
                         </a>
                     </div>
+
 
                 </div>
                 <div class="row">

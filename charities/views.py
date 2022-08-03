@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import FormView
+from django.views.generic import FormView, ListView
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -105,7 +105,8 @@ class CreateTask(FormView):
             user_charity = Charity.objects.get(user=user)
             state, title, description = data.get('state'), data.get('title'), data.get('description')
             Task.objects.create(charity=user_charity, state=state, title=title, description=description)
-            messages.success(request, 'تسک شما با موفقیت ثبت شد .')
+            message = 'تسک شما با موفقیت ثبت شد شما میتوانید تسک های ثبت شده خود را در پروفایل خود در فیلد مربوطه مشاهده بفرمایید .'
+            messages.success(request, message)
             return redirect('/charities/task/')
         return render(request, 'tasks.html', context={'form': form})
 
@@ -131,5 +132,16 @@ def task_request(request, task_id):
     if request.method == 'POST':
         benefactor = Benefactor.objects.get(user=request.user)
         task.assign_to_benefactor(benefactor)
-        messages.success(request, 'درخواست نیکوکاری شما ثبت شد منتظر جواب بمانید .')
+        message = 'درخواست شما با موفقیت ثبت شد شما میتوانید از وضیعیت درخواست های خود در بخش پروفایلتان دیدن کنید .'
+        messages.success(request, message)
         return redirect('/home/')
+
+
+def task_related_charity_benefactor(request):
+
+    if request.method == 'GET':
+        user = request.user
+        tasks_charity = Task.objects.related_tasks_to_charity(user)
+        tasks_benefactor = Task.objects.related_tasks_to_benefactor(user)
+        context = {'tasks_ch': tasks_charity, 'tasks_be': tasks_benefactor}
+        return render(request, 'task_related_charity.html', context=context)

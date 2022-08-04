@@ -9,33 +9,65 @@
 
 </head>
 <body>
-    <div class="d-flex flex-column justify-content-center w-100 h-100" style="text-align:center" dir="rtl">
+    {% if task %}
+            <div class="d-flex flex-column justify-content-center w-100 h-100" style="text-align:center" dir="rtl">
 
-      <div class="d-flex flex-column justify-content-center align-items-center">
-        <h1 class="fw-light text-white m-0">اطلاعات در مورد این نیکوکاری</h1>
-      </div>
-        <form method="post">
-              {% csrf_token %}
-                <h3>
-                     عنوان نیکوکاری : {{ task.title }}
-                </h3>
-                <h3>
-                    زمان ثبت نیکوکاری : {{ task.date }}
-                </h3>
-                <h3>
-                    نام خیریه مربوطه : {{ task.charity }}
-                </h3>
-                <h3>
-                    توضیحات نیکوکاری :
-                </h3>
-                <p>{{ task.description }}</p>
-                <h4> در صورت مورد قبول بودن شرایط دکمه ثبت را بزنید و برای موسسه مربوطه درخواست ارسال میشود. </h4>
-              <div class="wrap">
-                    <button class="button" type="submit">ثبت</button>
-              </div><br>
-              <a href="{% url 'list_taskes' %}" class="underline" style="color: black">بازگشت</a>
+              <div class="d-flex flex-column justify-content-center align-items-center">
+                <h1 class="fw-light text-white m-0">اطلاعات در مورد این نیکوکاری</h1>
+              </div>
+                <form method="post">
+                      {% csrf_token %}
+                        <h3>
+                             عنوان نیکوکاری : {{ task.title }}
+                        </h3>
+                        <h3>
+                            زمان ثبت نیکوکاری : {{ task.date }}
+                        </h3>
+                        <h3>
+                            نام خیریه مربوطه : {{ task.charity }}
+                        </h3>
+                        <h3>
+                            توضیحات نیکوکاری :
+                        </h3>
+                        <p>{{ task.description }}</p>
+                        <h4> در صورت مورد قبول بودن شرایط دکمه ثبت را بزنید و برای موسسه مربوطه درخواست ارسال میشود. </h4>
+                      <div class="wrap">
+                            <button class="button" type="submit">ثبت</button>
+                      </div><br>
+                      <a href="{% url 'list_taskes' %}" class="underline" style="color: black">بازگشت</a>
 
-            </form>
-    </div>
+                    </form>
+            </div>
+    {% elif benefactor %}
+            <div class="d-flex flex-column justify-content-center w-100 h-100" style="text-align:center" dir="rtl">
+
+              <div class="d-flex flex-column justify-content-center align-items-center">
+                <h1 class="fw-light text-white m-0">اطلاعات نیکوکار</h1>
+              </div>
+                <form method="post">
+                      {% csrf_token %}
+                        <h3>
+
+                        </h3>
+                        <h3>
+                            زمان ثبت نیکوکاری : {{ task.date }}
+                        </h3>
+                        <h3>
+                            نام خیریه مربوطه : {{ task.charity }}
+                        </h3>
+                        <h3>
+                            توضیحات نیکوکاری :
+                        </h3>
+                        <p>{{ task.description }}</p>
+                        <h4> در صورت مورد قبول بودن شرایط دکمه ثبت را بزنید و برای موسسه مربوطه درخواست ارسال میشود. </h4>
+                      <div class="wrap">
+                            <button class="button" type="submit">ثبت</button>
+                      </div><br>
+                      <a href="{% url 'task_ch_be' %}" class="underline" style="color: black">بازگشت</a>
+
+                    </form>
+            </div>
+
+    {% endif %}
 </body>
 </html>

@@ -146,6 +146,9 @@ def task_related_charity_benefactor(request):
         tasks_charity = Task.objects.related_tasks_to_charity(user)
         tasks_benefactor = Task.objects.related_tasks_to_benefactor(user)
         context = {'tasks_ch': tasks_charity, 'tasks_be': tasks_benefactor}
+        if user.is_charity:
+            charity = Charity.objects.get(user=user)
+            context['charity'] = charity
         return render(request, 'task_related_charity.html', context=context)
 
 
@@ -173,3 +176,15 @@ def task_update_or_delete(request, command, task_id):
             messages.success(request, f'نیکوکاری مورد نظر با موفقیت تغییر یافت .')
             return redirect('/charities/task_ch_be/')
         return render(request, 'tasks.html', context={'form': form})
+
+
+@login_required
+@check_charity_user
+def show_benefactor(request, benefactor_id):
+    if request.method == 'GET':
+        benefactor = Benefactor.objects.get(id=benefactor_id)
+        context = {'benefactor': benefactor}
+        return render(request, 'request_task.html', context=context)
+
+    if request.method == 'POST':
+        ...

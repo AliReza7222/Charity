@@ -26,8 +26,10 @@
         {% endif %}
   <!-- /success messaging -->
 {% if tasks_ch %}
-        <h1>لیست نیکوکاری ها ثبت شده توسط خیریه ما </h1>
+        <h1 dir="rtl">لیست نیکوکاری ها ثبت شده توسط خیریه {{charity}} </h1>
         <h4>. در زیر لیست نیکوکاری های که توسط شما ایجاد شده نمایش داده شده است </h4>
+        <h4 dir="auto">نیکوکاری های که نیکوکار برای انجام ان درخواست داده است دیگر قابل تغییر نمی باشد .</h4>
+        <h4 dir="auto">برای قبول یا رد درخواست نیکوکار بر روی اسم ان کلیک کنید .</h4>
         <table class="table">
           <tr>
             <th class="table__heading">عنوان</th>
@@ -51,7 +53,8 @@
                     </td>
                     <td class="table__content" data-heading="Jersey Number">
                         {% if task.assigned_benefactor %}
-                            <a class="underline" href="#">{{ task.assigned_benefactor }}</a>
+                            <a class="underline" href="{% url 'show_be' task.assigned_benefactor.id %}">
+                                {{ task.assigned_benefactor }}</a>
                         {% elif task.assigned_benefactor == None %}
                             نیکوکاری درخواست نداده است
                         {% endif %}
@@ -102,6 +105,6 @@
           {% endfor %}
         </table>
 {% endif %}
-<a href="{% url 'home' %}"  class="underline"><h4 style="text-align:center">بازگشت به خانه</h4></a>
+<a href="{% url 'home' %}"  class="open-popup"><h4 style="text-align:center">بازگشت به خانه</h4></a>
 </body>
 </html>

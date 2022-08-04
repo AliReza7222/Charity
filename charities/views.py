@@ -152,15 +152,21 @@ def task_related_charity_benefactor(request):
         return render(request, 'task_related_charity.html', context=context)
 
 
-@check_charity_user
 @login_required(login_url='/accounts/login/')
 def task_update_or_delete(request, command, task_id):
     task = Task.objects.get(id=task_id)
     if request.method == 'GET':
         if command == 'delete':
-            message = f' نیکوکاری مورد نظر با عنوان{task.title} با موفقیت حذف شد .'
+            message = ''
+            if request.user.is_charity:
+                message = f' نیکوکاری مورد نظر با عنوان{task.title} با موفقیت حذف شد .'
+                task.delete()
+            elif request.user.is_benefactor:
+                task.assigned_benefactor = None
+                task.state = 'P'
+                task.save()
+                message = 'درخواست با موفقیت حذف شد .'
             messages.success(request, message)
-            task.delete()
             return redirect('/charities/task_ch_be/')
         elif command == 'change':
             data_task = {'title': task.title, 'date': task.date, 'state': task.state, 'description': task.description}

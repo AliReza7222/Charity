@@ -70,7 +70,7 @@ class Task(models.Model):
         ('A', 'Assigned'),
         ('D', 'Done')
     ]
-    assigned_benefactor = models.ForeignKey(Benefactor, on_delete=models.SET_NULL, null=True)
+    assigned_benefactor = models.ForeignKey(Benefactor, on_delete=models.SET_NULL, null=True, blank=True)
     charity = models.ForeignKey(Charity, on_delete=models.CASCADE)
     title = models.CharField(max_length=60)
     state = models.CharField(max_length=1, choices=STATE_CHOICE, default='P')

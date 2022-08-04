@@ -76,6 +76,7 @@
             <th class="table__heading">وضعیت</th>
             <th class="table__heading">زمان ثبت نیکوکاری</th>
             <th class="table__heading">توضیحات</th>
+            <th class="table__heading">حذف درخواست</th>
           </tr>
           {% for task in tasks_be %}
               <tr class="table__row">
@@ -101,9 +102,15 @@
                           </div>
                         </div>
                     </td>
+                    <td class="table__content" data-heading="Jersey Number">
+                            <a href="{% url 'update_delete' 'delete' task.id %}"
+                               class="open-popup" style="color:red">حذف</a>
+                    </td>
               </tr>
           {% endfor %}
         </table>
+{% else %}
+<h3 dir="auto">لیست شما خالی میباشد .</h3>
 {% endif %}
 <a href="{% url 'home' %}"  class="open-popup"><h4 style="text-align:center">بازگشت به خانه</h4></a>
 </body>

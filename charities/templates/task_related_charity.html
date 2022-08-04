@@ -43,11 +43,15 @@
                     <td class="table__content" data-heading="Points">{{ task.get_state_display }}</td>
                     <td class="table__content" data-heading="Jersey Number">{{ task.date }}</td>
                     <td class="table__content" data-heading="Jersey Number">
-                        <a href="{% url 'update_delete' 'change' task.id %}" class="underline">کلیک کنید</a>
+                        {% if task.assigned_benefactor == None %}
+                            <a href="{% url 'update_delete' 'change' task.id %}" class="underline">کلیک کنید</a>
+                        {% elif task.assigned_benefactor != None %}
+                            <a href="#" style="color:red">قابل تغییر نیست</a>
+                        {% endif %}
                     </td>
                     <td class="table__content" data-heading="Jersey Number">
                         {% if task.assigned_benefactor %}
-                            {{ task.assigned_benefactor }}
+                            <a class="underline" href="#">{{ task.assigned_benefactor }}</a>
                         {% elif task.assigned_benefactor == None %}
                             نیکوکاری درخواست نداده است
                         {% endif %}

@@ -187,15 +187,22 @@ def task_update_or_delete(request, command, task_id):
 
 @login_required(login_url='/accounts/login/')
 @check_charity_user
-def show_benefactor(request, benefactor_id, command):
+def show_benefactor(request, benefactor_id):
+    benefactor = Benefactor.objects.get(id=benefactor_id)
     if request.method == 'GET':
-        if command == 'show':
-            benefactor = Benefactor.objects.get(id=benefactor_id)
-            user_benefactor = User.objects.get(id=benefactor.user.id)
-            context = {'benefactor': benefactor, 'user': user_benefactor}
-            return render(request, 'request_task.html', context=context)
+        user_benefactor = User.objects.get(id=benefactor.user.id)
+        context = {'benefactor': benefactor, 'user': user_benefactor}
+        return render(request, 'request_task.html', context=context)
 
     if request.method == 'POST':
-        if command == 'accept':
-            return HttpResponse('accpet')
-        return HttpResponse(command)
+        task = Task.objects.get(assigned_benefactor=benefactor)
+        if request.POST.get('accept'):
+            task.response_to_benefactor_request('A')
+            message = 'کاربر مورد نظر با موفقیت برای انجام این نیکوکاری انتخاب شد .'
+            messages.success(request, message)
+            return redirect('/charities/task_ch_be/')
+        elif request.POST.get('reject'):
+            task.response_to_benefactor_request('R')
+            message = 'کاربر با موفقیت برای انجام این نیکوکاری رد شد .'
+            messages.success(request, message)
+            return redirect('/charities/task_ch_be/')

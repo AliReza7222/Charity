@@ -65,12 +65,13 @@
                             زمان ازاد در هفته نیکوکار : {{ benefactor.free_time_per_week }} ساعت
                         </h3>
                       <div class="wrap">
-                            <button class="button" type="submit" style="color:white;background:green">قبول</button>
+                            <input class="button" type="submit" style="color:white;background:green" value="قبول"
+                                   name="accept">
                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <button class="button" type="submit"
-                            style="color:white;background:red">رد</button>
+                            <input class="button" type="submit"
+                            style="color:white;background:red" value="رد" name="reject">
                       </div><br>
-                      <a href="{% url 'task_ch_be' %}" class="underline" style="color: black">بازگشت</a>
+                      <a href="{% url 'task_ch_be' %}" class="underline" style="color: white">بازگشت</a>
 
                     </form>
             </div>

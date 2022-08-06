@@ -53,7 +53,7 @@
                     </td>
                     <td class="table__content" data-heading="Jersey Number">
                         {% if task.assigned_benefactor %}
-                            <a class="underline" href="{% url 'show_be' task.assigned_benefactor.id 'show' %}">
+                            <a class="underline" href="{% url 'show_be' task.assigned_benefactor.id %}">
                                 {{ task.assigned_benefactor }}</a>
                         {% elif task.assigned_benefactor == None %}
                             نیکوکاری درخواست نداده است

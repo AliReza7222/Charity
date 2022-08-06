@@ -17,7 +17,7 @@ urlpatterns = [
     path('task_ch_be/', task_related_charity_benefactor, name='task_ch_be'),
     path('update_delete/<str:command>/<slug:task_id>/',
          task_update_or_delete, name='update_delete'),
-    path('show_benefactor/<slug:benefactor_id>/<str:command>/', show_benefactor, name='show_be'),
+    path('show_benefactor/<slug:benefactor_id>/', show_benefactor, name='show_be'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

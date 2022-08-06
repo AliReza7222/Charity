@@ -9,6 +9,7 @@ from django.contrib import messages
 from .models import Benefactor, Charity, Task, ProfileUser
 from .forms import BenefactorForm, CharityForm, ProfileForm, TaskForm
 from .permissions import check_charity_user, check_benefactor
+from accounts.models import User
 
 
 @login_required(login_url='/accounts/login/')
@@ -184,13 +185,17 @@ def task_update_or_delete(request, command, task_id):
         return render(request, 'tasks.html', context={'form': form})
 
 
-@login_required
+@login_required(login_url='/accounts/login/')
 @check_charity_user
-def show_benefactor(request, benefactor_id):
+def show_benefactor(request, benefactor_id, command):
     if request.method == 'GET':
-        benefactor = Benefactor.objects.get(id=benefactor_id)
-        context = {'benefactor': benefactor}
-        return render(request, 'request_task.html', context=context)
+        if command == 'show':
+            benefactor = Benefactor.objects.get(id=benefactor_id)
+            user_benefactor = User.objects.get(id=benefactor.user.id)
+            context = {'benefactor': benefactor, 'user': user_benefactor}
+            return render(request, 'request_task.html', context=context)
 
     if request.method == 'POST':
-        ...
+        if command == 'accept':
+            return HttpResponse('accpet')
+        return HttpResponse(command)

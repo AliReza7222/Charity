@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.core import validators
 from django.shortcuts import redirect
-from django.http import HttpResponse
 
 
 def check_charity_user(func):

@@ -187,7 +187,7 @@ def task_update_or_delete(request, command, task_id):
 
 @login_required(login_url='/accounts/login/')
 @check_charity_user
-def show_benefactor(request, benefactor_id):
+def show_benefactor(request, benefactor_id, task_id):
     benefactor = Benefactor.objects.get(id=benefactor_id)
     if request.method == 'GET':
         user_benefactor = User.objects.get(id=benefactor.user.id)
@@ -195,7 +195,8 @@ def show_benefactor(request, benefactor_id):
         return render(request, 'request_task.html', context=context)
 
     if request.method == 'POST':
-        task = Task.objects.get(assigned_benefactor=benefactor)
+        task = Task.objects.get(id=task_id)
+        print(task)
         if request.POST.get('accept'):
             task.response_to_benefactor_request('A')
             message = 'کاربر مورد نظر با موفقیت برای انجام این نیکوکاری انتخاب شد .'

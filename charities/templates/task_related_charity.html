@@ -131,8 +131,13 @@
                         </div>
                     </td>
                     <td class="table__content" data-heading="Jersey Number">
+                        {% if task.state != 'D' %}
                             <a href="{% url 'update_delete' 'delete' task.id %}"
                                class="open-popup" style="color:red">حذف</a>
+                        {% elif task.state == 'D' %}
+                            <a href="#"
+                               class="open-popup" style="color:blue">--</a>
+                        {% endif %}
                     </td>
               </tr>
           {% endfor %}

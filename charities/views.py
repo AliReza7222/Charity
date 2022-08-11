@@ -207,3 +207,22 @@ def show_benefactor(request, benefactor_id, task_id):
             message = 'کاربر با موفقیت برای انجام این نیکوکاری رد شد .'
             messages.success(request, message)
             return redirect('/charities/task_ch_be/')
+
+
+@login_required(login_url='/accounts/login/')
+@check_charity_user
+def done_task(request, task_id):
+    if request.method == 'POST':
+        task = Task.objects.get(id=task_id)
+        if request.POST.get('done'):
+            message = f" ماموریت با عنوان \"{task.title}\" با تایید شما پایان یافت . "
+            messages.success(request, message)
+            task.done()
+            return redirect('/charities/task_ch_be/')
+        elif request.POST.get('open'):
+            message = f'ماموریت با عنوان \"{task.title}\" باز شد.'
+            messages.success(request, message)
+            task.state = 'A'
+            task.save()
+            return redirect('/charities/task_ch_be/')
+

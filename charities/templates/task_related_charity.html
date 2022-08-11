@@ -30,6 +30,7 @@
         <h4>. در زیر لیست نیکوکاری های که توسط شما ایجاد شده نمایش داده شده است </h4>
         <h4 dir="auto">نیکوکاری های که نیکوکار برای انجام ان درخواست داده است دیگر قابل تغییر نمی باشد .</h4>
         <h4 dir="auto">برای قبول یا رد درخواست نیکوکار بر روی اسم ان کلیک کنید .</h4>
+        <h4 dir="auto">در صورت تکمیل ماموریت بر روی کلمه تایید در فیلد مربوطه کلیک کنید .</h4>
         <table class="table">
           <tr>
             <th class="table__heading">عنوان</th>
@@ -37,12 +38,20 @@
             <th class="table__heading">زمان ثبت</th>
             <th class="table__heading">تغییر</th>
             <th class="table__heading">اتصال به نیکو کار</th>
+            <th class="table__heading">تایید تکمیل شدن</th>
             <th class="table__heading">حذف</th>
           </tr>
           {% for task in tasks_ch %}
               <tr class="table__row">
                     <td class="table__content" data-heading="Player">{{ task.title }}</td>
-                    <td class="table__content" data-heading="Points">{{ task.get_state_display }}</td>
+                    <td class="table__content" data-heading="Points">
+                        {% if task.state != 'D' %}
+                            {{ task.get_state_display }}
+                        {% elif task.state == 'D' %}
+                            <a href="#" style="color:green">
+                                {{ task.get_state_display }}</a>
+                        {% endif %}
+                    </td>
                     <td class="table__content" data-heading="Jersey Number">{{ task.date }}</td>
                     <td class="table__content" data-heading="Jersey Number">
                         {% if task.assigned_benefactor == None %}
@@ -52,11 +61,30 @@
                         {% endif %}
                     </td>
                     <td class="table__content" data-heading="Jersey Number">
-                        {% if task.assigned_benefactor %}
+                        {% if task.assigned_benefactor  and task.state != 'D' %}
                             <a class="underline" href="{% url 'show_be' task.assigned_benefactor.id task.id %}">
                                 {{ task.assigned_benefactor }}</a>
                         {% elif task.assigned_benefactor == None %}
                             نیکوکاری درخواست نداده است
+                        {% elif task.assigned_benefactor  and task.state == 'D' %}
+                            <a href="#" style="color:green">
+                                {{ task.assigned_benefactor }}</a>
+                        {% endif %}
+                    </td>
+                    <td class="table__content" data-heading="Jersey Number">
+                        {% if task.assigned_benefactor and task.state == 'A' or task.state == 'D' %}
+                        <form method="post" action="{% url 'done' task.id %}">
+                            {% csrf_token %}
+                            {% if task.state == 'A' %}
+                                <input name="done" value="تایید" type="submit"
+                                       style="color:green;background:white;cursor:pointer;border: none;">
+                            {% elif task.state == 'D' %}
+                                <input name="open" value="بازکردن" type="submit"
+                                       style="color:blue;background:white;cursor:pointer;border: none;">
+                            {% endif %}
+                        </form>
+                        {% elif task.assigned_benefactor == None or task.state != 'A' %}
+                            __
                         {% endif %}
                     </td>
                     <td class="table__content" data-heading="Jersey Number">

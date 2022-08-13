@@ -2,8 +2,7 @@ from string import ascii_lowercase, ascii_uppercase, digits
 import random
 
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, FormView
-from django.http import HttpResponse
+from django.views.generic import CreateView, FormView, UpdateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import login, logout
@@ -11,7 +10,7 @@ from django .contrib import messages
 
 
 from .models import User, Token
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, ChangePasswordForm
 from .authenticate import UserBackend
 
 
@@ -69,3 +68,24 @@ def logout_user(request):
             logout(request)
             messages.success(request, 'شما با موفقیت از سایت خارج شدید .')
             return redirect('/home/')
+
+
+class ChangePassword(FormView):
+    model = User
+    template_name = 're_password.html'
+    form_class = ChangePasswordForm
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            new_password = data.get('password_new')
+            email = data.get('email')
+            user = User.objects.get(email=email)
+            user.set_password(new_password)
+            user.save()
+            message = 'رمز عبور شما با موفقیت عوض شد حال برای ورود دوباره تلاش نمایید .'
+            messages.success(request, message)
+            return redirect('/home/')
+        return render(request, 're_password.html', context={'form': form})
+

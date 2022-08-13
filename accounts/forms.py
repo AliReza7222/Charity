@@ -100,3 +100,25 @@ class LoginForm(forms.Form):
             if email == user_email:
                 return email
             raise forms.ValidationError('این ایمیل برای این نام کاربری نامعتبر است !')
+
+
+class ChangePasswordForm(forms.Form):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"placeholder": "ایمیل خود را وارد کنید"}))
+    password_new = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "رمز جدید خود را وارد کنید"}))
+    re_password_new = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "تکرار رمز عبور جدید"}))
+
+    def clean_email(self):
+        data = self.cleaned_data
+        email = data.get('email')
+        if not User.objects.filter(email=email).exists():
+            raise forms.ValidationError('نام کاربری با این ایمیل وجود ندارد !')
+        return email
+
+    def clean_re_password_new(self):
+        data = self.cleaned_data
+        password, re_password = data.get('password_new'), data.get('re_password_new')
+        if password != re_password:
+            raise forms.ValidationError('رمز عبور وارد شده با تکرار ان همخوانی ندارد !')
+        elif len(password) < 7:
+            raise forms.ValidationError('طول رمز باید حداقل 7 کارکتر باشد !')
+        return re_password

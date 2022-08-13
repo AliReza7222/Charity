@@ -84,7 +84,7 @@ class ChangePassword(FormView):
             user = User.objects.get(email=email)
             user.set_password(new_password)
             user.save()
-            message = 'رمز عبور شما با موفقیت عوض شد حال برای ورود دوباره تلاش نمایید .'
+            message = 'رمز عبور شما با موفقیت تغییر یافت .'
             messages.success(request, message)
             return redirect('/home/')
         return render(request, 're_password.html', context={'form': form})

@@ -3,9 +3,10 @@ This project is a Django project to connect charity to benefactor or vice versa.
 
 
 After installing the libraries in the requirements, you can run the project with the runserver command in Django commands.
-<p> command : <b>python manage.py runserver</b> 
-<p> for manage your site you must create a superuser with command : <b>python manage.py createsuperuser </b></p>  
+<p> first you must create a database and makemigrations data then first run commands : <b> python manage.py migrate</b> and <b>python manage.py makemigrations </b></p>
+<p> second for manage your site you must create a superuser with command : <b>python manage.py createsuperuser </b></p>   
 <p> you must after download this project create a captcha google and wirte <b>RECAPTCHA_PUBLIC_KEY</b> and <b>RECAPTCHA_PRIVATE_KEY</b> in settings.py <p>
+<p>for run project you must run command: <b>python manage.py runserver</b></p>  
 
 After the implementation of the project, you must register on the site and then complete your profile with the title you want to be on the site.
 

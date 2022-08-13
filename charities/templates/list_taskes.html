@@ -55,12 +55,22 @@
     <th class="table__heading">زمان ثبت</th>
   </tr>
   {% for charity in charities %}
-    {% for task in charity.task_set.all %}
+    {% for task in charity.task_set.all|dictsort:"state" %}
       <tr class="table__row">
             <td class="table__content" data-heading="Player">{{ charity.name }}</td>
             <td class="table__content" data-heading="Seasons">
                 <a href="{% url 'task_request' task.id %}" class="underline">{{ task.title }}</a></td>
-            <td class="table__content" data-heading="Points">{{ task.get_state_display }}</td>
+            <td class="table__content" data-heading="Points">
+                {% if task.state == 'A' %}
+                    <p style="color:white;background:#099E2D"> {{task.get_state_display }}</p>
+                {% elif task.state == 'P' %}
+                    <p style="color:white;background:#3859C0"> {{task.get_state_display }}</p>
+                {% elif task.state == 'W' %}
+                    <p style="color:white;background:#A01010"> {{task.get_state_display }}</p>
+                {% elif task.state == 'D' %}
+                    <p style="color:white;background:#21927D"> {{task.get_state_display }}</p>
+                {% endif %}
+            </td>
             <td class="table__content" data-heading="Jersey Number">{{ task.date }}</td>
         {% endfor %}
       </tr>

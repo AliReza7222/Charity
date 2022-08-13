@@ -16,5 +16,21 @@ If you are on the site as a philanthropist, you can see charity missions and req
 The missions you request can be seen in your profile section.
 
 
+
+This project consists of three apps:<br>
+<ul>
+<li>about_us</li>
+<li>accounts</li>
+<li>charities</li>
+</ul>
+<br>
+<h3>app about_us : </h3>
+<p>This app includes parts of the template that are home and about us, and north of the footer and header </p>
+<h3> app accounts: </h3>
+<p>This app is related to users and the templates related to the user, such as user registration or login or logout or changing the password, are related to the user.
+</p>
+<h3> app charities: </h3>
+<p>This app contains sections related to a benefactor and a charity and their related templates</p>
+<p>
 This project is my first Django project and it is a Django template and I really enjoyed doing it.
-In fact, it is similar to a real project rather than a real project and it can definitely be better than this.
+In fact, it is similar to a real project rather than a real project and it can definitely be better than this.</p>

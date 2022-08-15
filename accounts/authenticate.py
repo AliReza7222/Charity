@@ -1,3 +1,5 @@
+# This file is custom authenticate user
+
 from django.contrib.auth.hashers import check_password
 from .models import User
 

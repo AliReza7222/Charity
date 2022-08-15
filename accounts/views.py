@@ -2,9 +2,9 @@ from string import ascii_lowercase, ascii_uppercase, digits
 import random
 
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, FormView, UpdateView
+from django.views.generic import CreateView, FormView
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth import login, logout
 from django .contrib import messages
 
